@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday &hearts;</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&family=Satisfy&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Poppins,sans-serif;
+    background:linear-gradient(135deg,#ffb6d9,#ff80bf,#ff5fa2);
+    overflow-x:hidden;
+    overflow-y:auto;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:24px 20px;
+}
+
+.card{
+    width:90%;
+    max-width:650px;
+    padding:38px 24px;
+    text-align:center;
+    color:white;
+    z-index:2;
+}
+
+h1{
+    font-family:"Great Vibes",cursive;
+    font-size:65px;
+    margin-bottom:15px;
+    line-height:1.05;
+    white-space:nowrap;
+}
+
+.birthday-title{
+    font-size:clamp(42px, 12vw, 65px);
+}
+
+.name-title{
+    font-size:clamp(31px, 8.5vw, 56px);
+}
+
+.title-heart{
+    font-family:Poppins,sans-serif;
+    font-size:.55em;
+    vertical-align:middle;
+}
+
+h2{
+    font-family:"Caveat",cursive;
+    font-size:28px;
+    margin-bottom:20px;
+    font-weight:700;
+}
+
+p{
+    font-family:"Satisfy",cursive;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.password-box{
+    margin:18px auto 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    max-width:390px;
+}
+
+.password-box input{
+    width:100%;
+    padding:16px 22px;
+    border:none;
+    border-radius:50px;
+    background:rgba(255,255,255,.9);
+    color:#d9367c;
+    font-size:18px;
+    font-weight:600;
+    text-align:center;
+    outline:none;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.4);
+}
+
+.password-box input{
+    position:absolute;
+    width:1px;
+    height:1px;
+    opacity:0;
+    pointer-events:none;
+}
+
+.password-box input::placeholder{
+    color:#ff7eb7;
+    font-weight:500;
+}
+
+.password-display{
+    width:100%;
+    min-height:58px;
+    padding:15px 22px;
+    border-radius:50px;
+    background:rgba(255,255,255,.9);
+    color:#d9367c;
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.4);
+}
+
+.password-display.empty{
+    color:#ff7eb7;
+    font-size:16px;
+    font-weight:500;
+    letter-spacing:0;
+}
+
+.keypad{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    width:100%;
+    max-width:252px;
+}
+
+.number-button,
+.delete-button{
+    width:100%;
+    height:46px;
+    padding:0;
+    border-radius:16px;
+    font-size:19px;
+    background:rgba(255,255,255,.36);
+    color:white;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.42),0 6px 14px rgba(206,45,119,.12);
+    backdrop-filter:blur(8px);
+}
+
+.delete-button{
+    font-size:13px;
+}
+
+.number-button:hover,
+.delete-button:hover{
+    background:rgba(255,255,255,.52);
+}
+
+.button-row{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+button{
+    padding:15px 28px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:#ff4f96;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+    background:#ffe8f3;
+}
+
+.love-button{
+    background:#fff;
+}
+
+.soft-button{
+    background:rgba(255,255,255,.28);
+    color:white;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.5);
+}
+
+.soft-button:hover{
+    background:rgba(255,255,255,.4);
+}
+
+#hint{
+    min-height:28px;
+    color:#fff4fb;
+    font-size:15px;
+    line-height:1.5;
+}
+
+#birthdayContent{
+    display:none;
+    animation:fade .8s;
+}
+
+#cakeScreen{
+    display:none;
+    animation:fade .8s;
+}
+
+.cake-stage{
+    margin:22px auto 10px;
+    min-height:310px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    perspective:700px;
+}
+
+.flame{
+    font-size:42px;
+    line-height:1;
+    filter:drop-shadow(0 0 14px rgba(255,224,92,.95));
+    transform-origin:center bottom;
+    transition:.35s ease;
+}
+
+.flame.small{
+    transform:scale(.7);
+    filter:drop-shadow(0 0 10px rgba(255,224,92,.8));
+}
+
+.flame.tiny{
+    transform:scale(.42);
+    filter:drop-shadow(0 0 6px rgba(255,224,92,.6));
+}
+
+.flame.off{
+    opacity:0;
+    transform:scale(.08) translateY(8px);
+}
+
+.candle{
+    width:18px;
+    height:58px;
+    margin-top:-4px;
+    border-radius:10px 10px 4px 4px;
+    background:repeating-linear-gradient(
+        45deg,
+        #fff 0 10px,
+        #ff8fc1 10px 18px
+    );
+    box-shadow:inset 0 -8px 0 rgba(255,79,150,.18);
+    z-index:2;
+}
+
+.cake{
+    width:min(350px, 86vw);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    filter:drop-shadow(0 18px 20px rgba(118,27,83,.22));
+}
+
+.cake-tier{
+    position:relative;
+    height:62px;
+    border-radius:16px 16px 10px 10px;
+    overflow:visible;
+    box-shadow:
+        inset 0 -16px 0 rgba(91,27,65,.13),
+        inset 18px 0 28px rgba(255,255,255,.22),
+        inset -22px 0 30px rgba(91,27,65,.12),
+        0 9px 16px rgba(91,27,65,.14);
+}
+
+.cake-tier::before{
+    content:none;
+}
+
+.buttercream{
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:24px;
+    border-radius:16px 16px 9px 9px;
+    background:linear-gradient(180deg,#fff 0%,#fff9fc 56%,#ffe3f0 100%);
+    box-shadow:0 5px 0 rgba(255,221,239,.42), inset 0 -4px 8px rgba(255,143,193,.2);
+    z-index:4;
+}
+
+.cake-tier::after{
+    content:"";
+    position:absolute;
+    left:10%;
+    right:10%;
+    bottom:13px;
+    height:12px;
+    border-radius:999px;
+    background:
+        radial-gradient(circle at 8% 50%, #fff 0 3px, transparent 4px),
+        radial-gradient(circle at 20% 50%, #fff570 0 3px, transparent 4px),
+        radial-gradient(circle at 34% 50%, #7ce9ff 0 3px, transparent 4px),
+        radial-gradient(circle at 49% 50%, #ffffff 0 3px, transparent 4px),
+        radial-gradient(circle at 63% 50%, #ff72b2 0 3px, transparent 4px),
+        radial-gradient(circle at 78% 50%, #fff570 0 3px, transparent 4px),
+        radial-gradient(circle at 92% 50%, #7ce9ff 0 3px, transparent 4px);
+    opacity:.95;
+    z-index:3;
+}
+
+.cake-tier-top{
+    width:54%;
+    background:
+        radial-gradient(circle at 18% 34%, rgba(255,255,255,.5) 0 8px, transparent 9px),
+        linear-gradient(180deg,#fff7a8 0%,#ffd84d 54%,#f8b72e 100%);
+    margin-bottom:-3px;
+    z-index:3;
+    overflow:visible;
+}
+
+.cake-tier-middle{
+    width:76%;
+    height:70px;
+    background:
+        radial-gradient(circle at 78% 42%, rgba(255,255,255,.34) 0 12px, transparent 13px),
+        linear-gradient(180deg,#ffc8e5 0%,#ff5bac 52%,#e83491 100%);
+    margin-bottom:-4px;
+    z-index:2;
+    overflow:visible;
+}
+
+.cake-tier-bottom{
+    width:100%;
+    height:82px;
+    border-radius:18px 18px 12px 12px;
+    background:
+        radial-gradient(circle at 22% 44%, rgba(255,255,255,.32) 0 14px, transparent 15px),
+        linear-gradient(180deg,#b9f5ff 0%,#45d0f4 52%,#18aede 100%);
+    box-shadow:
+        inset 0 -18px 0 rgba(16,114,160,.16),
+        inset 24px 0 32px rgba(255,255,255,.22),
+        inset -24px 0 34px rgba(20,88,132,.16),
+        0 14px 28px rgba(91,27,65,.25);
+    z-index:1;
+    overflow:visible;
+}
+
+.cake-plate{
+    width:min(390px, 92vw);
+    height:24px;
+    border-radius:999px;
+    background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,221,239,.72));
+    box-shadow:0 12px 24px rgba(160,35,92,.2), inset 0 -5px 0 rgba(255,143,193,.24);
+}
+
+.cake-action{
+    margin-top:18px;
+}
+
+.countdown-love{
+    display:none;
+    width:112px;
+    height:100px;
+    margin:18px auto 0;
+    position:relative;
+    color:#ff4f96;
+    font-size:38px;
+    font-weight:700;
+    align-items:center;
+    justify-content:center;
+    text-shadow:0 2px 8px rgba(255,255,255,.8);
+    animation:heartPulse .85s ease-in-out infinite;
+    isolation:isolate;
+}
+
+.countdown-love::before{
+    content:"\2665";
+    position:absolute;
+    top:50%;
+    left:50%;
+    color:rgba(255,255,255,.94);
+    font-size:126px;
+    line-height:1;
+    z-index:-1;
+    text-shadow:0 12px 28px rgba(206,45,119,.22);
+    transform:translate(-50%,-48%);
+}
+
+.slider-wrap{
+    display:none;
+    width:100%;
+    max-width:380px;
+    margin:18px auto 0;
+}
+
+.slider-track{
+    position:relative;
+    height:58px;
+    border-radius:999px;
+    background:rgba(255,255,255,.26);
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.5);
+    overflow:hidden;
+    touch-action:none;
+}
+
+.slider-progress{
+    width:0;
+    height:100%;
+    border-radius:999px;
+    background:rgba(255,255,255,.5);
+}
+
+.slider-text{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:700;
+    pointer-events:none;
+}
+
+.slider-thumb{
+    position:absolute;
+    top:6px;
+    left:6px;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:none;
+    padding:0;
+    background:white;
+    color:#ff4f96;
+    font-size:22px;
+    box-shadow:0 8px 18px rgba(206,45,119,.25);
+    cursor:grab;
+}
+
+.slider-thumb:hover{
+    transform:none;
+}
+
+#message{
+    margin-top:30px;
+    display:none;
+    animation:fade .8s;
+}
+
+.photo-grid{
+    margin:26px auto 22px;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+    max-width:520px;
+}
+
+.photo-grid img{
+    width:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    display:block;
+    background:white;
+    border:solid white;
+    border-width:10px 10px 42px;
+    border-radius:2px;
+    box-shadow:0 14px 26px rgba(125,28,83,.22),0 1px 0 rgba(255,255,255,.8);
+}
+
+.photo-grid img:nth-child(odd){
+    transform:rotate(-2deg);
+}
+
+.photo-grid img:nth-child(even){
+    transform:rotate(2deg);
+}
+
+.wa-section{
+    margin-top:24px;
+}
+
+.wa-title{
+    font-family:"Great Vibes",cursive;
+    font-size:42px;
+    line-height:1.1;
+    margin-bottom:12px;
+}
+
+.wa-button{
+    display:inline-block;
+    margin-top:8px;
+    padding:15px 30px;
+    border-radius:999px;
+    background:white;
+    color:#ff4f96;
+    font-size:17px;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.wa-button:hover{
+    transform:scale(1.06);
+    background:#ffe8f3;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+.heart{
+    position:fixed;
+    color:#fff;
+    font-size:25px;
+    animation:float linear infinite;
+    opacity:.8;
+}
+
+.balloon{
+    position:fixed;
+    bottom:-90px;
+    width:42px;
+    height:55px;
+    border-radius:50% 50% 45% 45%;
+    background:var(--balloon-color);
+    animation:balloonFloat linear forwards;
+    opacity:.9;
+    z-index:1;
+    box-shadow:inset -8px -10px 0 rgba(160,35,92,.13);
+}
+
+.balloon::before{
+    content:"";
+    position:absolute;
+    left:13px;
+    top:10px;
+    width:10px;
+    height:14px;
+    border-radius:50%;
+    background:rgba(255,255,255,.55);
+}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-35px;
+    width:1px;
+    height:38px;
+    background:rgba(255,255,255,.75);
+}
+
+@keyframes float{
+0%{
+transform:translateY(110vh) scale(.5);
+opacity:0;
+}
+10%{
+opacity:1;
+}
+100%{
+transform:translateY(-20vh) scale(1.5);
+opacity:0;
+}
+}
+
+@keyframes balloonFloat{
+0%{
+transform:translateY(0) translateX(0) rotate(-3deg);
+opacity:0;
+}
+12%{
+opacity:1;
+}
+100%{
+transform:translateY(-120vh) translateX(var(--drift)) rotate(8deg);
+opacity:0;
+}
+}
+
+@keyframes heartPulse{
+0%,100%{
+transform:scale(1);
+}
+50%{
+transform:scale(1.08);
+}
+}
+
+@media (max-width:520px){
+    body{
+        align-items:flex-start;
+        padding:18px 12px 34px;
+    }
+
+    .card{
+        width:100%;
+        padding:24px 18px;
+    }
+
+    h1{
+        margin-bottom:10px;
+        white-space: normal;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    p{
+        font-size:16px;
+    }
+
+    button{
+        width:100%;
+    }
+
+    .password-box{
+        gap:10px;
+    }
+
+    .number-button,
+    .delete-button{
+        height:42px;
+        border-radius:14px;
+    }
+
+    .cake-stage{
+        min-height:255px;
+    }
+
+    .slider-track{
+        height:54px;
+    }
+
+    .slider-thumb{
+        width:42px;
+        height:42px;
+    }
+
+    .countdown-love{
+        width:98px;
+        height:88px;
+        font-size:34px;
+    }
+
+    .countdown-love::before{
+        font-size:112px;
+    }
+
+    .photo-grid{
+        gap:9px;
+    }
+
+    .photo-grid img{
+        border-radius:14px;
+    }
+
+    .wa-title{
+        font-size:36px;
+    }
+}
+</style>
+</head>
+
+<body>
+<audio id="happyMusic" src="happy.mp3"></audio>
+
+<div class="card">
+    <div id="passwordScreen">
+        <h1 class="birthday-title">Happy Birthday</h1>
+        <h1 class="name-title">Nia Oliffia Ananta <span class="title-heart">&hearts;</span></h1>
+        <p>
+        tebak passwordnya apa
+        </p>
+
+        <div class="password-box">
+            <input id="passwordInput" type="password" inputmode="numeric" placeholder="Password rahasia" autocomplete="off">
+            <div id="passwordDisplay" class="password-display empty">Klik angka</div>
+
+            <div class="keypad">
+                <button class="number-button" onclick="pressNumber('1')">1</button>
+                <button class="number-button" onclick="pressNumber('2')">2</button>
+                <button class="number-button" onclick="pressNumber('3')">3</button>
+                <button class="number-button" onclick="pressNumber('4')">4</button>
+                <button class="number-button" onclick="pressNumber('5')">5</button>
+                <button class="number-button" onclick="pressNumber('6')">6</button>
+                <button class="number-button" onclick="pressNumber('7')">7</button>
+                <button class="number-button" onclick="pressNumber('8')">8</button>
+                <button class="number-button" onclick="pressNumber('9')">9</button>
+                <button class="delete-button" onclick="clearPassword()">Clear</button>
+                <button class="number-button" onclick="pressNumber('0')">0</button>
+                <button class="delete-button" onclick="deleteNumber()">Hapus</button>
+            </div>
+
+            <div class="button-row">
+                <button class="love-button" onclick="checkPassword()">
+                    &hearts; Buka dengan Cinta
+                </button>
+                <button class="soft-button" onclick="showHint()">
+                    Bisikkan Petunjuk
+                </button>
+            </div>
+
+            <p id="hint"></p>
+        </div>
+    </div>
+
+    <div id="cakeScreen">
+        <h1 class="birthday-title">Tiup lilinnya</h1>
+        <p>
+        Tiup lilinnya pelan-pelan, baru ucapan manisnya bisa dibuka.
+        </p>
+
+        <div class="cake-stage">
+            <div id="flame" class="flame">&#128293;</div>
+            <div class="candle"></div>
+            <div class="cake">
+                <div class="cake-tier cake-tier-top">
+                    <span class="buttercream"></span>
+                </div>
+                <div class="cake-tier cake-tier-middle">
+                    <span class="buttercream"></span>
+                </div>
+                <div class="cake-tier cake-tier-bottom">
+                    <span class="buttercream"></span>
+                </div>
+            </div>
+            <div class="cake-plate"></div>
+        </div>
+
+        <button id="blowButton" class="love-button cake-action" onclick="blowCandle()">
+            Tiup Lilin
+        </button>
+
+        <div id="countdownLove" class="countdown-love">5</div>
+
+        <div id="openSlider" class="slider-wrap">
+            <div id="sliderTrack" class="slider-track">
+                <div id="sliderProgress" class="slider-progress"></div>
+                <div class="slider-text">Geser untuk membuka ucapan</div>
+                <button id="sliderThumb" class="slider-thumb" type="button">&hearts;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="birthdayContent">
+        <h1>Happy Birthday</h1>
+
+        <h2>Untuk Cewek Manis &hearts;</h2>
+
+        <p>
+        Semoga di hari ulang tahunmu ini,
+        Allah memgabulkan semua doa dan harapanmu menjadi kenyataan.
+        Semoga selalu diberi kesehatan,
+        kebahagiaan, kesuksesan,
+        dan dikelilingi orang-orang yang menyayangimu.
+        </p>
+
+        <button onclick="showMessage()">
+        &hearts; Buka Ucapan
+        </button>
+
+        <div id="message">
+            <p>
+            Meskipun kamu capek dan jauh dari keluarga
+            Tetaplah menjadi dirimu yang ceria,
+            baik hati, dan selalu tersenyum.
+            senyum mu manis dan masih ku simpan videonya &#128516;
+            
+            </p>
+
+            <div class="photo-grid">
+                <img src="olifpkl.jpg" alt="Foto kenangan 1">
+                <img src="olip pkl 2.jpg" alt="Foto kenangan 2">
+                <img src="pantai 1.jpg" alt="Foto kenangan 3">
+                <img src="pantai 2.jpg" alt="Foto kenangan 4">
+            </div>
+
+            <p>
+            Happy Birthday!<br>
+            Semoga hari ini menjadi hari yang<br>
+            paling indah untukmu.
+            &hearts;
+            </p>
+
+            <div class="wa-section">
+                <div class="wa-title">Punya pesan untukku</div>
+                <a id="waButton" class="wa-button" href="#" target="_blank" rel="noopener">
+                    Kirim Ucapan via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const correctPassword = "0107";
+const waNumber = "6281234567890";
+const waMessage = "Happy birthday, semoga hari ini jadi hari yang paling indah untukmu.";
+let blowCount = 0;
+let balloonTimer;
+let countdownTimer;
+let isSliding = false;
+let sliderStartX = 0;
+let sliderMax = 0;
+
+function updatePasswordDisplay(){
+    const input = document.getElementById("passwordInput");
+    const display = document.getElementById("passwordDisplay");
+
+    if(input.value.length === 0){
+        display.textContent = "Klik angka";
+        display.classList.add("empty");
+        return;
+    }
+
+    display.textContent = "\u2665".repeat(input.value.length);
+    display.classList.remove("empty");
+}
+
+function pressNumber(number){
+    const input = document.getElementById("passwordInput");
+    const hint = document.getElementById("hint");
+
+    if(input.value.length >= correctPassword.length){
+        return;
+    }
+
+    input.value += number;
+    hint.textContent = "";
+    updatePasswordDisplay();
+}
+
+function deleteNumber(){
+    const input = document.getElementById("passwordInput");
+    input.value = input.value.slice(0,-1);
+    updatePasswordDisplay();
+}
+
+function clearPassword(){
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("hint").textContent = "";
+    updatePasswordDisplay();
+}
+
+function checkPassword(){
+    const input = document.getElementById("passwordInput");
+    const hint = document.getElementById("hint");
+
+    if(input.value === correctPassword){
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("cakeScreen").style.display = "block";
+        hint.textContent = "";
+        return;
+    }
+
+    hint.textContent = "Belum tepat, coba lagi pelan-pelan ya sayang.";
+    input.value = "";
+    updatePasswordDisplay();
+}
+
+function showHint(){
+    document.getElementById("hint").textContent = "Petunjuk:Hari dan bulan ulang tahunmu";
+}
+
+function blowCandle(){
+    const flame = document.getElementById("flame");
+    const blowButton = document.getElementById("blowButton");
+    blowCount++;
+
+    if(blowCount === 1){
+        flame.className = "flame small";
+        blowButton.textContent = "Tiup Lagi";
+        return;
+    }
+
+    if(blowCount === 2){
+        flame.className = "flame tiny";
+        blowButton.textContent = "Sekali Lagi";
+        return;
+    }
+
+    flame.className = "flame off";
+    blowButton.style.display = "none";
+    document.getElementById('happyMusic').play();
+    startBalloons();
+    startCountdown();
+}
+
+function startBalloons(){
+    if(balloonTimer){
+        return;
+    }
+
+    createBalloon();
+    balloonTimer = setInterval(createBalloon, 420);
+}
+
+function startCountdown(){
+    const countdownLove = document.getElementById("countdownLove");
+    let secondsLeft = 5;
+
+    countdownLove.textContent = secondsLeft;
+    countdownLove.style.display = "flex";
+
+    clearInterval(countdownTimer);
+    countdownTimer = setInterval(function(){
+        secondsLeft--;
+        countdownLove.textContent = secondsLeft;
+
+        if(secondsLeft <= 0){
+            clearInterval(countdownTimer);
+            countdownLove.style.display = "none";
+            document.getElementById("openSlider").style.display = "block";
+        }
+    },1000);
+}
+
+function createBalloon(){
+    const colors = ["#ffeb3b","#ff2f5f","#22c7ff"];
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.left = Math.random()*100+"vw";
+    balloon.style.setProperty("--balloon-color", colors[Math.floor(Math.random()*colors.length)]);
+    balloon.style.setProperty("--drift", (Math.random()*90-45)+"px");
+    balloon.style.animationDuration = (5+Math.random()*4)+"s";
+
+    document.body.appendChild(balloon);
+
+    setTimeout(()=>{
+        balloon.remove();
+    },9000);
+}
+
+function setupSlider(){
+    const track = document.getElementById("sliderTrack");
+    const thumb = document.getElementById("sliderThumb");
+
+    thumb.addEventListener("pointerdown", function(event){
+        isSliding = true;
+        sliderStartX = event.clientX - thumb.offsetLeft;
+        sliderMax = track.clientWidth - thumb.clientWidth - 12;
+        thumb.setPointerCapture(event.pointerId);
+    });
+
+    thumb.addEventListener("pointermove", function(event){
+        if(!isSliding){
+            return;
+        }
+
+        const nextLeft = Math.max(6, Math.min(event.clientX - sliderStartX, sliderMax + 6));
+        thumb.style.left = nextLeft+"px";
+        document.getElementById("sliderProgress").style.width = (nextLeft + thumb.clientWidth)+"px";
+
+        if(nextLeft >= sliderMax){
+            openBirthdayContent();
+        }
+    });
+
+    thumb.addEventListener("pointerup", function(){
+        if(!isSliding){
+            return;
+        }
+
+        isSliding = false;
+        if(thumb.offsetLeft < sliderMax){
+            thumb.style.left = "6px";
+            document.getElementById("sliderProgress").style.width = "0";
+        }
+    });
+}
+
+function openBirthdayContent(){
+    isSliding = false;
+    document.getElementById("cakeScreen").style.display = "none";
+    document.getElementById("birthdayContent").style.display = "block";
+}
+
+function showMessage(){
+    document.getElementById("message").style.display = "block";
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+        checkPassword();
+    }
+});
+
+setupSlider();
+document.getElementById("waButton").href = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(waMessage);
+
+function createHeart(){
+
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="&hearts;";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(15+Math.random()*35)+"px";
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},10000);
+
+}
+
+setInterval(createHeart,250);
+
+</script>
+
+</body>
+</html>
